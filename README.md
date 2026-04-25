@@ -51,7 +51,8 @@ Scene X follows the **Miuix / HyperOS** design philosophy:
 
 ---
 
-## 🤝 Contribution
-Scene X is an evolving workbench. Feel free to fork, experiment, and submit PRs for new **Workbench Blocks**.
+## 🤝 Credits & Source
+Scene X is a specialized fork of [vtools_en](https://github.com/ramabondanp/vtools_en).
+The original project and official resources can be found at [omarea.com](https://omarea.com/).
 
 **Maintained with ❤️ by itswill00**
