@@ -31,6 +31,26 @@ import com.omarea.utils.Update
 import com.omarea.vtools.R
 import com.omarea.vtools.dialogs.DialogMonitor
 import com.omarea.vtools.dialogs.DialogPower
+import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import top.yukonga.miuix.kmp.theme.MiuixTheme
 import com.omarea.vtools.fragments.FragmentCpuModes
 import com.omarea.vtools.fragments.FragmentHome
 import com.omarea.vtools.fragments.FragmentNav
@@ -177,12 +197,14 @@ class ActivityMain : ActivityBase() {
                     tabHistory.addLast(position)
                 }
                 lastSelectedTab = position
+                initBottomNavigation()
             }
 
             override fun onTabUnselected(tab: com.google.android.material.tabs.TabLayout.Tab?) {}
             override fun onTabReselected(tab: com.google.android.material.tabs.TabLayout.Tab?) {}
         })
         setInitialTab(intent?.getIntExtra(EXTRA_SELECT_TAB, TAB_HOME) ?: TAB_HOME)
+        initBottomNavigation()
 
         if (CheckRootStatus.lastCheckResult) {
             try {
@@ -208,15 +230,72 @@ class ActivityMain : ActivityBase() {
             }
             ThermalCheckThread(this).start()
         }
+    }
 
-        binding.actionGraph.setOnClickListener {
-            actionGraph()
-        }
-        binding.actionPower.setOnClickListener {
-            DialogPower(this).showPowerMenu()
-        }
-        binding.actionSettings.setOnClickListener {
-            startActivity(Intent(this.applicationContext, ActivityOtherSettings::class.java))
+    private fun initBottomNavigation() {
+        binding.bottomNavigationView.setContent {
+            MiuixTheme {
+                val selectedTab = lastSelectedTab
+                
+                Box(
+                    modifier = androidx.compose.ui.Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp, vertical = 20.dp),
+                    contentAlignment = androidx.compose.ui.Alignment.BottomCenter
+                ) {
+                    // Floating Container
+                    Row(
+                        modifier = androidx.compose.ui.Modifier
+                            .fillMaxWidth()
+                            .height(68.dp)
+                            .clip(RoundedCornerShape(34.dp))
+                            .background(MiuixTheme.colorScheme.surface.copy(alpha = 0.9f))
+                            .padding(horizontal = 8.dp),
+                        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        val items = listOf(
+                            Triple(TAB_NAV, R.drawable.app_menu, R.string.app_nav),
+                            Triple(TAB_HOME, R.drawable.app_home, R.string.app_home),
+                            Triple(TAB_TUNER, R.drawable.app_settings, R.string.app_tuner)
+                        )
+
+                        items.forEach { (tabId, iconRes, labelRes) ->
+                            val isSelected = selectedTab == tabId
+                            val contentColor = if (isSelected) MiuixTheme.colorScheme.primary else MiuixTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+
+                            Column(
+                                modifier = androidx.compose.ui.Modifier
+                                    .weight(1f)
+                                    .clip(RoundedCornerShape(20.dp))
+                                    .combinedClickable(
+                                        onClick = {
+                                            binding.tabList.getTabAt(tabId)?.select()
+                                            initBottomNavigation() // Refresh UI
+                                        },
+                                        onLongClick = null
+                                    )
+                                    .padding(vertical = 8.dp),
+                                horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Icon(
+                                    painter = painterResource(iconRes),
+                                    contentDescription = null,
+                                    tint = contentColor,
+                                    modifier = androidx.compose.ui.Modifier.size(24.dp)
+                                )
+                                Spacer(modifier = androidx.compose.ui.Modifier.height(4.dp))
+                                Text(
+                                    text = getString(labelRes),
+                                    style = MiuixTheme.textStyles.footnote2,
+                                    color = contentColor
+                                )
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
