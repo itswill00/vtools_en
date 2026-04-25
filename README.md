@@ -1,16 +1,57 @@
-# Scene
+# Scene X
+**A Next-Gen Tactical System Workbench for Android**
 
-> Before using this tool, please make sure you have ROOT phone and busybox installed. You'd better be a gaming expert, at least you should also be able to refresh and repair the system. Because some advanced functions in the application may affect the normal startup of the system! ! !
-> It has the best experience on devices using [Snapdragon 845/835/821/820] [Exynos8890] processor, and other device functions will be limited.
+![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?style=for-the-badge&logo=kotlin&logoColor=white)
+![Compose](https://img.shields.io/badge/Jetpack_Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
+![Root](https://img.shields.io/badge/Root-Required-red?style=for-the-badge)
+
+Scene X is a highly optimized, modern system utility designed for Android power users. Built with a focus on manual control, transparency, and the elegant **Miuix** design language.
 
 ---
 
-No detailed description
+## 🛠 Key Features
+
+### 📊 Tactical Dashboard
+Real-time monitoring of background processes and CPU metrics. Designed with a glass-morphic interface for maximum information density without the clutter.
+
+### 🐧 KernelSU Manager
+A universal, low-level module manager. Seamlessly scan and manage modules from `/data/adb/modules` regardless of your root solution (KernelSU, APatch, or Magisk).
+
+### ⚡ System Workbench (Work in Progress)
+The ultimate playground for kernel tweaks. A modular "Block" based approach to system optimization—modify, verify, and **Inject** changes only when you're ready.
+
+### 🧹 Clean & Lean
+- **No Bloat**: Permanently removed unnecessary background monitoring and leak detection tools.
+- **Privacy Focused**: No hidden telemetry; full manual control over performance profiles.
+- **Modern UI**: Unified header navigation with integrated system actions.
 
 ---
 
-**Some app screenshot**
+## 🏗 Build & Deploy
 
-<img src="https://user-images.githubusercontent.com/14274061/138872394-c27b859a-4cf0-4abf-ada8-3210de240ae9.jpg" width="320"> <img src="https://user-images.githubusercontent.com/14274061/138872398-b8475111-1005-46ea-a5fa-b9ccff685eb1.jpg" width="320">
-<img src="https://user-images.githubusercontent.com/14274061/138872401-0ac5f127-0bd9-4908-8168-f470b6ad0dfb.jpg" width="320"> <img src="https://user-images.githubusercontent.com/14274061/138872402-e4256e0b-9651-4ddd-99eb-11627344147b.jpg" width="320">
-<img src="https://user-images.githubusercontent.com/14274061/138872405-094a32fe-6e44-4e27-a8b4-4fd6c540898c.jpg" width="320"> <img src="https://user-images.githubusercontent.com/14274061/138872384-b98fe241-fbbf-4114-ab4f-df7832b501ce.jpg" width="320">
+We use an automated professional build system. You can build and upload the project to Telegram directly from the terminal.
+
+### Quick Build
+```bash
+./builder.sh
+```
+
+### Clean Build (Recommended for major UI changes)
+```bash
+./builder.sh --clean
+```
+
+---
+
+## 📸 Aesthetic
+Scene X follows the **Miuix / HyperOS** design philosophy:
+- **Unified Glass Header**: Seamless status bar integration.
+- **Segmented Navigation**: Intuitive tab switching.
+- **Pill-shaped Controls**: Modern and tactile interaction.
+
+---
+
+## 🤝 Contribution
+Scene X is an evolving workbench. Feel free to fork, experiment, and submit PRs for new **Workbench Blocks**.
+
+**Maintained with ❤️ by itswill00**
