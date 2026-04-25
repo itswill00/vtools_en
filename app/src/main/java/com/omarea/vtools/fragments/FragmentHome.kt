@@ -661,11 +661,12 @@ private fun HomeScreen(
     onGpuInfoContainerReady: (ViewGroup) -> Unit
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(8.dp),
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         HomeSectionCard(

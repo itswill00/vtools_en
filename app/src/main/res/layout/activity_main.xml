@@ -5,30 +5,24 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="false"
     android:keepScreenOn="false">
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/top_header_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/tab_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/top_header_view"
         android:layout_alignParentBottom="true" />
 
-    <androidx.compose.ui.platform.ComposeView
-        android:id="@+id/bottom_navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
-
-    <LinearLayout
-        android:id="@+id/tab_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_alignParentTop="true">
-        <!-- Kept for compatibility but hidden -->
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    <!-- Kept hidden for logic compatibility -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
 
 </RelativeLayout>
