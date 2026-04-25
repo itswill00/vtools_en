@@ -35,9 +35,9 @@
     <string name="share_link">You should try Scene too, I think it\'s not bad, download address: \n http://vtools.omarea.com/</string>
     
 
-    <string name="app_name">Scene5</string>
-    <string name="app_name_short">Scene5 OpenSource</string>
-    <string name="app_name_mode_switch">Scene-Quick switch mode</string>
+    <string name="app_name">Scene X</string>
+    <string name="app_name_short">Scene X OpenSource</string>
+    <string name="app_name_mode_switch">Scene X-Quick switch mode</string>
 
     <string name="backup_action_title_boot">Export Boot</string>
     <string name="backup_action_desc_boot">Backup the currently used Boot as img, copy it to /sdcard/boot.img</string>
