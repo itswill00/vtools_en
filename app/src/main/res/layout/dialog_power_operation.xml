@@ -6,23 +6,27 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:alpha="0.85"
+        android:alpha="0.95"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:orientation="vertical">
 
         <TextView
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            style="@style/textDefault"
-            android:text="Select Operation"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:layout_marginBottom="16dp"
+            style="@style/textTitle"
+            android:text="System Power"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <!-- Primary Actions Row 1 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,262 +34,212 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_weight="1"
-                android:layout_height="65dp"
-                android:background="@drawable/krscript_item_ripple"
                 android:id="@+id/power_shutdown"
-                style="@style/ListCardItemSmall"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/krscript_item_ripple"
+                android:padding="12dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageView
-                    android:alpha="0.8"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="centerInside"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
                     android:src="@drawable/power_shutdown"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:background="@drawable/action_menu_icon_bg"
+                    android:backgroundTint="#f9592f"
+                    android:padding="8dp"
                     app:tint="#ffffff" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    style="@style/textTitle"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/textTitle"
-                        android:layout_marginBottom="4dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Shutdown" />
-
-                    <TextView
-                        style="@style/textSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Normal shutdown" />
-                </LinearLayout>
-
+                    android:text="Shutdown"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="1"
-                android:layout_height="65dp"
-                android:background="@drawable/krscript_item_ripple"
                 android:id="@+id/power_reboot"
-                style="@style/ListCardItemSmall"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/krscript_item_ripple"
+                android:padding="12dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageView
-                    android:alpha="0.8"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="centerInside"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
                     android:src="@drawable/power_reboot"
                     android:background="@drawable/action_menu_icon_bg"
-                    android:backgroundTint="#8BC34A"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:backgroundTint="#87cb00"
+                    android:padding="8dp"
                     app:tint="#ffffff" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    style="@style/textTitle"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/textTitle"
-                        android:layout_marginBottom="4dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Reboot" />
-
-                    <TextView
-                        style="@style/textSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Normal reboot" />
-                </LinearLayout>
-
+                    android:text="Reboot"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 
+        <!-- Primary Actions Row 2 -->
         <LinearLayout
-            android:layout_weight="1"
-            android:layout_height="65dp"
-            android:background="@drawable/krscript_item_ripple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/power_recovery"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/krscript_item_ripple"
+                android:padding="12dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:src="@drawable/power_recovery"
+                    android:background="@drawable/action_menu_icon_bg"
+                    android:backgroundTint="#fc8a1b"
+                    android:padding="8dp"
+                    app:tint="#ffffff" />
+
+                <TextView
+                    style="@style/textTitle"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recovery"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/power_fastboot"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/krscript_item_ripple"
+                android:padding="12dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:src="@drawable/power_fastboot"
+                    android:background="@drawable/action_menu_icon_bg"
+                    android:backgroundTint="#138ed6"
+                    android:padding="10dp"
+                    app:tint="#ffffff" />
+
+                <TextView
+                    style="@style/textTitle"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fastboot"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:layout_marginBottom="8dp"
+            style="@style/textSmall"
+            android:text="Advanced Options"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Hot Reboot -->
+        <LinearLayout
             android:id="@+id/power_hot_reboot"
-            style="@style/ListCardItemSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/krscript_item_ripple"
+            android:padding="12dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:alpha="0.8"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:scaleType="centerInside"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:src="@drawable/power_hot_reboot"
                 android:background="@drawable/action_menu_icon_bg"
-                android:backgroundTint="#00BCD4"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:backgroundTint="#00b9c2"
+                android:padding="6dp"
                 app:tint="#ffffff" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
+                android:layout_marginLeft="12dp"
                 android:orientation="vertical">
-
                 <TextView
                     style="@style/textTitle"
-                    android:layout_marginBottom="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Hot restart" />
-
+                    android:text="Hot Reboot"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
                 <TextView
                     style="@style/textSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Reboot only the system interface without rebooting (may cause bugs)）" />
+                    android:text="Restarts SystemUI / Framework only"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-
         </LinearLayout>
 
+        <!-- EDL Mode -->
         <LinearLayout
-            android:layout_weight="1"
-            android:layout_height="65dp"
-            android:background="@drawable/krscript_item_ripple"
-            android:id="@+id/power_recovery"
-            style="@style/ListCardItemSmall"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:alpha="0.8"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:scaleType="centerInside"
-                android:src="@drawable/power_recovery"
-                android:background="@drawable/action_menu_icon_bg"
-                android:backgroundTint="#C8787878"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                app:tint="#ffffff" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/textTitle"
-                    android:layout_marginBottom="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Recovery" />
-
-                <TextView
-                    style="@style/textSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Reboot to Recovery mode (commonly known as card brushing mode)" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_height="65dp"
-            android:background="@drawable/krscript_item_ripple"
-            android:id="@+id/power_fastboot"
-            style="@style/ListCardItemSmall"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:alpha="0.8"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:scaleType="centerInside"
-                android:src="@drawable/power_fastboot"
-                android:background="@drawable/action_menu_icon_bg"
-                android:backgroundTint="#C8787878"
-                android:padding="10dp"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                app:tint="#ffffff" />
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/textTitle"
-                    android:layout_marginBottom="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Fastboot" />
-
-                <TextView
-                    style="@style/textSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Reboot to Fastboot mode (commonly known as USB wire brush mode)）" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_height="65dp"
-            android:background="@drawable/krscript_item_ripple"
             android:id="@+id/power_emergency"
-            style="@style/ListCardItemSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/krscript_item_ripple"
+            android:padding="12dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:alpha="0.8"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:scaleType="centerInside"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:src="@drawable/power_emergency"
-                android:padding="11dp"
                 android:background="@drawable/action_menu_icon_bg"
-                android:backgroundTint="#C8787878"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:backgroundTint="#7800c2"
+                android:padding="8dp"
                 app:tint="#ffffff" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
+                android:layout_marginLeft="12dp"
                 android:orientation="vertical">
-
                 <TextView
                     style="@style/textTitle"
-                    android:layout_marginBottom="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="9008(EDL)" />
-
+                    android:text="Emergency (9008)"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
                 <TextView
                     style="@style/textSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Reboot to 9008 mode (available only on some Snapdragon devices)" />
+                    android:text="Reboot to EDL mode (Snapdragon devices)"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-
         </LinearLayout>
 
     </LinearLayout>
