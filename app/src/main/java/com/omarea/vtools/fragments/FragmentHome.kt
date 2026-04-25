@@ -22,6 +22,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -944,48 +945,70 @@ private fun HomeScreen(
         }
 
         HomeSectionCard(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(140.dp)
-                        .padding(start = 8.dp),
+                        .heightIn(min = 150.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    AndroidView(
-                        modifier = Modifier.weight(1f),
-                        factory = { context ->
-                            processListViewFactory(context)
-                        }
-                    )
+                    // Left side: Process List (Flexible space)
+                    Column(
+                        modifier = Modifier
+                            .weight(1.3f)
+                            .padding(start = 12.dp, top = 8.dp, bottom = 8.dp)
+                    ) {
+                        Text(
+                            text = "Background Processes",
+                            style = MiuixTheme.textStyles.footnote1,
+                            color = MiuixTheme.colorScheme.onSurfaceContainerVariant,
+                            modifier = Modifier.padding(bottom = 6.dp)
+                        )
+                        AndroidView(
+                            modifier = Modifier.fillMaxWidth().height(110.dp),
+                            factory = { context ->
+                                processListViewFactory(context)
+                            }
+                        )
+                    }
+
+                    // Divider
                     Box(
                         modifier = Modifier
                             .width(1.dp)
-                            .height(120.dp)
-                            .background(MiuixTheme.colorScheme.onSurfaceContainerVariant.copy(alpha = 0.3f))
+                            .height(110.dp)
+                            .background(MiuixTheme.colorScheme.onSurface.copy(alpha = 0.08f))
                     )
+
+                    // Right side: CPU Metrics (Instrument look)
                     Column(
                         modifier = Modifier
                             .weight(1f)
-                            .combinedClickable(onClick = onCpuClick, onLongClick = null),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                            .combinedClickable(onClick = onCpuClick, onLongClick = null)
+                            .padding(vertical = 8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
                     ) {
-                        Row(
+                        // Temp Badge
+                        Box(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 6.dp, top = 6.dp, end = 6.dp, bottom = 0.dp),
-                            horizontalArrangement = Arrangement.End
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(MiuixTheme.colorScheme.primary.copy(alpha = 0.1f))
+                                .padding(horizontal = 8.dp, vertical = 2.dp)
                         ) {
                             Text(
                                 text = state.cpuTemperatureText,
                                 style = MiuixTheme.textStyles.footnote2,
-                                color = MiuixTheme.colorScheme.onSurfaceContainerVariant
+                                color = MiuixTheme.colorScheme.primary
                             )
                         }
+                        
+                        Spacer(modifier = Modifier.height(4.dp))
+
                         Box(
                             modifier = Modifier
-                                .height(85.dp)
-                                .width(125.dp),
+                                .height(75.dp)
+                                .width(110.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             AndroidView(
@@ -998,16 +1021,18 @@ private fun HomeScreen(
                             )
                             Text(
                                 text = "CPU",
-                                style = MiuixTheme.textStyles.footnote1,
-                                color = MiuixTheme.colorScheme.onSurfaceContainerVariant
+                                style = MiuixTheme.textStyles.footnote2,
+                                color = MiuixTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                                modifier = Modifier.padding(top = 35.dp)
                             )
                         }
-                        Spacer(modifier = Modifier.height(6.dp))
+
                         Text(
                             text = state.cpuPlatform,
                             style = MiuixTheme.textStyles.footnote1,
                             color = MiuixTheme.colorScheme.onSurface,
-                            modifier = Modifier.padding(horizontal = 6.dp)
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                         )
                         Text(
                             text = state.cpuTotalLoad,
@@ -1016,12 +1041,16 @@ private fun HomeScreen(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(8.dp))
+                
+                // Bottom Grid (Cores)
+                Spacer(modifier = Modifier.height(4.dp))
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(cpuGridHeight.dp)
-                        .padding(start = 0.dp, end = 0.dp)
+                        .padding(horizontal = 8.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(MiuixTheme.colorScheme.onSurface.copy(alpha = 0.03f))
                 ) {
                     AndroidView(
                         modifier = Modifier.fillMaxSize(),

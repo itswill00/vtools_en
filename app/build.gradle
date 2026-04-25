@@ -31,7 +31,7 @@ android {
         minSdk 24
         targetSdk 34
         versionCode generateVersionCode()
-        versionName "r" + generateVersionCode()
+        versionName "1.0-SceneX"
         externalNativeBuild {
             cmake {
                 cppFlags ""
@@ -57,6 +57,7 @@ android {
             minifyEnabled true
             debuggable false
             jniDebuggable = false
+            signingConfig signingConfigs.omarea_Signing
         }
         debug {
             // signingConfig signingConfigs.omarea_Signing
