@@ -663,6 +663,7 @@ private fun HomeScreen(
     onCpuChartReady: (CpuBigBarView) -> Unit,
     onGpuInfoContainerReady: (ViewGroup) -> Unit
 ) {
+    val context = androidx.compose.ui.platform.LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -816,7 +817,13 @@ private fun HomeScreen(
             }
         }
 
-        HomeSectionCard(modifier = Modifier.fillMaxWidth()) {
+        HomeSectionCard(
+            modifier = Modifier.fillMaxWidth(),
+            clickable = true,
+            onClick = {
+                context.startActivity(Intent(context, ActivityCpuControl::class.java))
+            }
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -860,10 +867,23 @@ private fun HomeScreen(
                         color = MiuixTheme.colorScheme.onSurface
                     )
                     Spacer(modifier = Modifier.height(4.dp))
+                    
+                    // Parse load value to determine color
+                    val gpuLoadInt = try {
+                        state.gpuLoadText.filter { it.isDigit() }.toInt()
+                    } catch (e: Exception) {
+                        0
+                    }
+                    val loadColor = when {
+                        gpuLoadInt > 90 -> androidx.compose.ui.graphics.Color.Red
+                        gpuLoadInt > 70 -> androidx.compose.ui.graphics.Color(0xFFFFA500) // Orange
+                        else -> MiuixTheme.colorScheme.onSurfaceContainerVariant
+                    }
+
                     Text(
                         text = state.gpuLoadText,
                         style = MiuixTheme.textStyles.footnote1,
-                        color = MiuixTheme.colorScheme.onSurfaceContainerVariant
+                        color = loadColor
                     )
                     if (state.gpuGovernorText.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(4.dp))
