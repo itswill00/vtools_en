@@ -676,142 +676,123 @@ private fun HomeScreen(
             clickable = true,
             onClick = onMemoryClick
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier.size(100.dp),
-                    contentAlignment = Alignment.Center
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    AndroidView(
-                        modifier = Modifier.fillMaxSize(),
-                        factory = { context ->
-                            MemoryChartView(context).apply {
-                                alpha = 0.7f
-                                onMemoryChartReady(this)
-                            }
-                        }
-                    )
-                    Text(
-                        text = "RAM",
-                        style = MiuixTheme.textStyles.footnote1,
-                        color = MiuixTheme.colorScheme.onSurfaceContainerVariant
-                    )
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                Column(modifier = Modifier.weight(1f)) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
+                    // Circular Memory Chart
+                    Box(
+                        modifier = Modifier.size(100.dp),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            AndroidView(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(8.dp),
-                                factory = { context ->
-                                    RamBarView(context).apply {
-                                        alpha = 0.4f
-                                        onRamStatReady(this)
-                                    }
+                        AndroidView(
+                            modifier = Modifier.fillMaxSize(),
+                            factory = { context ->
+                                MemoryChartView(context).apply {
+                                    alpha = 0.8f
+                                    onMemoryChartReady(this)
                                 }
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(
-                                    text = "Physical",
-                                    style = MiuixTheme.textStyles.footnote2,
-                                    color = MiuixTheme.colorScheme.onSurfaceContainerVariant,
-                                    modifier = Modifier.width(64.dp)
-                                )
-                                Text(
-                                    text = state.ramInfoText,
-                                    style = MiuixTheme.textStyles.footnote2,
-                                    color = MiuixTheme.colorScheme.onSurface,
-                                    modifier = Modifier.weight(1f)
-                                )
                             }
-                        }
-                        IconButton(onClick = onMemoryClear, modifier = Modifier.size(28.dp)) {
-                            Icon(
-                                painter = painterResource(R.drawable.icon_clear),
-                                contentDescription = null,
-                                tint = MiuixTheme.colorScheme.onSurface
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            AndroidView(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(8.dp),
-                                factory = { context ->
-                                    RamBarView(context).apply {
-                                        alpha = 0.4f
-                                        onSwapStatReady(this)
-                                    }
-                                }
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(
-                                    text = "Virtual",
-                                    style = MiuixTheme.textStyles.footnote2,
-                                    color = MiuixTheme.colorScheme.onSurfaceContainerVariant,
-                                    modifier = Modifier.width(64.dp)
-                                )
-                                Text(
-                                    text = state.zramInfoText,
-                                    style = MiuixTheme.textStyles.footnote2,
-                                    color = MiuixTheme.colorScheme.onSurface,
-                                    modifier = Modifier.weight(1f)
-                                )
-                            }
-                        }
-                        Box(
-                            modifier = Modifier
-                                .size(28.dp)
-                                .combinedClickable(
-                                    onClick = onMemoryCompact,
-                                    onLongClick = onMemoryCompactLong
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.icon_harddisk),
-                                contentDescription = null,
-                                tint = MiuixTheme.colorScheme.onSurface
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.alpha(0.75f)
-                    ) {
-                        Text(
-                            text = "SwapCached ",
-                            style = MiuixTheme.textStyles.footnote2,
-                            color = MiuixTheme.colorScheme.onSurfaceContainerVariant
                         )
                         Text(
-                            text = state.swapCached,
-                            style = MiuixTheme.textStyles.footnote2,
-                            color = MiuixTheme.colorScheme.onSurface,
-                            modifier = Modifier.weight(1f)
-                        )
-                        Text(
-                            text = "Dirty ",
-                            style = MiuixTheme.textStyles.footnote2,
-                            color = MiuixTheme.colorScheme.onSurfaceContainerVariant
-                        )
-                        Text(
-                            text = state.dirty,
-                            style = MiuixTheme.textStyles.footnote2,
+                            text = "RAM",
+                            style = MiuixTheme.textStyles.title4,
                             color = MiuixTheme.colorScheme.onSurface
                         )
+                    }
+                    
+                    Spacer(modifier = Modifier.width(12.dp))
+                    
+                    // Detailed Stats
+                    Column(modifier = Modifier.weight(1f)) {
+                        // Physical RAM Section
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = "Physical: ${state.ramInfoText}",
+                                    style = MiuixTheme.textStyles.footnote1,
+                                    color = MiuixTheme.colorScheme.onSurface
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                AndroidView(
+                                    modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)),
+                                    factory = { context ->
+                                        RamBarView(context).apply {
+                                            alpha = 0.5f
+                                            onRamStatReady(this)
+                                        }
+                                    }
+                                )
+                            }
+                            IconButton(onClick = onMemoryClear, modifier = Modifier.size(32.dp)) {
+                                Icon(
+                                    painter = painterResource(R.drawable.icon_clear),
+                                    contentDescription = null,
+                                    tint = MiuixTheme.colorScheme.primary
+                                )
+                            }
+                        }
+                        
+                        Spacer(modifier = Modifier.height(10.dp))
+                        
+                        // Virtual RAM Section
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = "Virtual: ${state.zramInfoText}",
+                                    style = MiuixTheme.textStyles.footnote1,
+                                    color = MiuixTheme.colorScheme.onSurface
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                AndroidView(
+                                    modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)),
+                                    factory = { context ->
+                                        RamBarView(context).apply {
+                                            alpha = 0.5f
+                                            onSwapStatReady(this)
+                                        }
+                                    }
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .clip(RoundedCornerShape(16.dp))
+                                    .combinedClickable(
+                                        onClick = onMemoryCompact,
+                                        onLongClick = onMemoryCompactLong
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.icon_harddisk),
+                                    contentDescription = null,
+                                    tint = MiuixTheme.colorScheme.primary
+                                )
+                            }
+                        }
+                    }
+                }
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                // Extra Info Footer
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MiuixTheme.colorScheme.onSurface.copy(alpha = 0.05f))
+                        .padding(horizontal = 10.dp, vertical = 6.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row {
+                        Text(text = "SwapCached: ", style = MiuixTheme.textStyles.footnote2, color = MiuixTheme.colorScheme.onSurfaceContainerVariant)
+                        Text(text = state.swapCached, style = MiuixTheme.textStyles.footnote2, color = MiuixTheme.colorScheme.onSurface)
+                    }
+                    Row {
+                        Text(text = "Dirty: ", style = MiuixTheme.textStyles.footnote2, color = MiuixTheme.colorScheme.onSurfaceContainerVariant)
+                        Text(text = state.dirty, style = MiuixTheme.textStyles.footnote2, color = MiuixTheme.colorScheme.onSurface)
                     }
                 }
             }
