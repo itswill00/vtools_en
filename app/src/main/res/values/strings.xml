@@ -36,7 +36,7 @@
     
 
     <string name="app_name">Scene X</string>
-    <string name="app_name_short">Scene X OpenSource</string>
+    <string name="app_name_short">Scene X</string>
     <string name="app_name_mode_switch">Scene X-Quick switch mode</string>
 
     <string name="backup_action_title_boot">Export Boot</string>
@@ -102,6 +102,7 @@
     <string name="menu_custom_command">Custom command</string>
     <string name="menu_processes">Process mgr </string>
     <string name="menu_modules">Magisk mgr</string>
+    <string name="menu_ksu">KernelSU mgr</string>
     <string name="menu_fps_chart">FPS record</string>
     <string name="menu_app_magisk">Extra Module</string>
     <string name="menu_gesture">Gesture</string>
