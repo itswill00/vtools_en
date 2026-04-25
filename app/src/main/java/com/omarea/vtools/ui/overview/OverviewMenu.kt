@@ -69,6 +69,7 @@ fun OverviewMenu(
                 OverviewNavItem(R.id.nav_processes, R.string.menu_processes, R.drawable.ic_processes, true, "System processes"),
                 OverviewNavItem(R.id.nav_img, R.string.menu_img, R.drawable.ic_menu_img, true, "Partition flashing"),
                 OverviewNavItem(R.id.nav_modules, R.string.menu_modules, R.drawable.ic_menu_magisk, true, "Magisk manager"),
+                OverviewNavItem(R.id.nav_ksu, R.string.menu_ksu, R.drawable.linux, true, "KernelSU manager"),
                 OverviewNavItem(R.id.nav_app_magisk, R.string.menu_app_magisk, R.drawable.ic_menu_addon, true, "Extensions"),
                 OverviewNavItem(R.id.nav_additional_all, R.string.menu_additional, R.drawable.ic_menu_shell, true, "Custom scripts")
             )

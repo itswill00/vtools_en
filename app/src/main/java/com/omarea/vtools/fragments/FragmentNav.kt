@@ -149,6 +149,11 @@ class FragmentNav : Fragment() {
                 startActivity(intent)
                 return
             }
+            R.id.nav_ksu -> {
+                val intent = Intent(context, ActivityKsuManager::class.java)
+                startActivity(intent)
+                return
+            }
             R.id.nav_processes -> {
                 val intent = Intent(context, ActivityProcess::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

@@ -303,6 +303,7 @@
         <activity android:name=".activities.ActivityPowerUtilization" android:configChanges="orientation|screenSize" />
         <activity android:name=".activities.ActivityProcess" android:windowSoftInputMode="adjustPan" android:configChanges="orientation|screenSize" android:taskAffinity="activities.ActivityProcess" />
         <activity android:name=".activities.ActivityModules" android:windowSoftInputMode="adjustPan" android:configChanges="orientation|screenSize" />
+        <activity android:name=".activities.ActivityKsuManager" android:windowSoftInputMode="adjustPan" android:configChanges="orientation|screenSize" />
         <activity android:name=".activities.ActivityMagisk" android:windowSoftInputMode="adjustResize" android:configChanges="orientation|screenSize" />
         <activity android:name=".activities.ActivityCpuControl" android:configChanges="orientation|screenSize" />
         <activity android:name=".activities.ActivityAppConfig2" android:configChanges="orientation|screenSize" />
@@ -364,16 +365,5 @@
             android:name=".services.CompileService"
             android:enabled="true"
             android:permission="" />
-        <service
-            android:name="com.omarea.scene_mode.SceneTileService"
-            android:icon="@drawable/p4"
-            android:label="@string/app_name"
-            android:exported="true"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
-        </service>
     </application>
-
 </manifest>
