@@ -388,15 +388,11 @@ class FragmentHome : Fragment() {
             }
 
             myHandler.post {
-                val ramInfoText = "${((totalMem - availMem) * 100 / totalMem)}% (${totalMem / 1024 + 1}GB)"
+                val ramInfoText = "${((totalMem - availMem) * 100 / totalMem)}% ($availMem MB / $totalMem MB)"
                 val zramText = if (swapTotal > 0) {
-                    if (swapTotal > 99) {
-                        "${(swapUsed * 100.0 / swapTotal).toInt()}% (${formatNumber(swapTotal / 1024.0)}GB)"
-                    } else {
-                        "${(swapUsed * 100.0 / swapTotal).toInt()}% (${swapTotal}MB)"
-                    }
+                    "${(swapUsed * 100.0 / swapTotal).toInt()}% (${swapTotal - swapUsed} MB / $swapTotal MB)"
                 } else {
-                    "0% (0MB)"
+                    "0% (0 MB / 0 MB)"
                 }
                 uiState.value = uiState.value.copy(
                     ramInfoText = ramInfoText,
