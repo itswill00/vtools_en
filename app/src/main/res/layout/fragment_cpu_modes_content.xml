@@ -202,10 +202,12 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="0dp"
                     android:layout_marginBottom="12dp"
-                    android:padding="12dp">
-                    <Row
+                    android:padding="12dp"
+                    android:orientation="vertical">
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         android:gravity="center_vertical">
                         <ImageView
                             android:layout_width="20dp"
@@ -219,7 +221,7 @@
                             android:layout_marginStart="8dp"
                             android:text="@string/accessibility_activate"
                             android:textStyle="bold" />
-                    </Row>
+                    </LinearLayout>
                     <TextView
                         style="@style/textSmall"
                         android:layout_width="match_parent"
