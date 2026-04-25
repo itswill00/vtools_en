@@ -81,7 +81,6 @@ if [ -z "$APK_FILE" ]; then
     log_error "APK file not found in $APK_DIR"
     exit 1
 fi
-
 # Metadata
 TIMESTAMP=$(date +"%m%d_%H%M")
 NEW_NAME="${PROJECT_NAME}_v${VERSION_NAME}_DEBUG_${TIMESTAMP}.apk"
@@ -91,7 +90,6 @@ FILE_SIZE=$(du -sh "$NEW_NAME" | awk '{print $1}')
 SHA256_VAL=$(sha256sum "$NEW_NAME" | awk '{print $1}')
 
 DURATION=$(( $(date +%s) - START_TIME ))
-CHANGELOG=$(git log -n 5 --pretty=format:"* %s" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g')
 
 # --- Uploading ---
 log_info "Uploading $NEW_NAME ($FILE_SIZE) to Telegram..."
@@ -101,9 +99,6 @@ MESSAGE="Build Successful
 Project: $PROJECT_NAME
 Version: <code>$VERSION_NAME</code>
 Commit: <code>$GIT_REV</code>
-
-Recent Changes:
-$CHANGELOG
 
 Stats:
 - Size: <code>$FILE_SIZE</code>

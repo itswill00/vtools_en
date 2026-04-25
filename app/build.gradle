@@ -93,7 +93,7 @@ androidComponents {
     onVariants(selector().all()) { variant ->
         variant.outputs.each { output ->
             def versionCode = output.versionCode.get()
-            def fileName = "SceneX" + "_5.0_OpenSource_r${versionCode}_" + variant.name + ".apk"
+            def fileName = "SceneX" + "_5.0_r${versionCode}_" + variant.name + ".apk"
             output.outputFileName.set(fileName)
         }
     }
@@ -135,7 +135,6 @@ dependencies {
     //    }
     // implementation files('libs/crimson.jar')
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
     implementation 'androidx.work:work-runtime-ktx:2.11.0'
 }
 repositories {
