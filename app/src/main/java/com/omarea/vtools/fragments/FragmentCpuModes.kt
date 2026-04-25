@@ -155,10 +155,14 @@ class FragmentCpuModes : Fragment() {
                 startService()
             } else {
                 globalSPF.edit().putBoolean(SpfConfig.GLOBAL_SPF_DYNAMIC_CONTROL, value).apply()
+                EventBus.publish(EventType.SCENE_CONFIG) // Notify changes
                 reStartService()
             }
         }
         content.dynamicControlOpts2.initExpand(false)
+        // Set view visibility directly based on actual state, don't rely on change listener for initialization
+        content.dynamicControlOpts.visibility = if (globalSPF.getBoolean(SpfConfig.GLOBAL_SPF_DYNAMIC_CONTROL, SpfConfig.GLOBAL_SPF_DYNAMIC_CONTROL_DEFAULT)) View.VISIBLE else View.GONE
+        
         content.dynamicControl.setOnCheckedChangeListener { _, isChecked ->
             content.dynamicControlOpts.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
