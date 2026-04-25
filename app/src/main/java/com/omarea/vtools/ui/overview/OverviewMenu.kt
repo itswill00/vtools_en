@@ -32,7 +32,8 @@ data class OverviewNavItem(
     val id: Int,
     val titleRes: Int,
     val iconRes: Int,
-    val requiresRoot: Boolean
+    val requiresRoot: Boolean,
+    val description: String = ""
 )
 
 data class OverviewSection(
@@ -49,29 +50,27 @@ fun OverviewMenu(
         OverviewSection(
             titleRes = R.string.menu_section_performance,
             items = listOf(
-                OverviewNavItem(R.id.nav_core_control, R.string.menu_core_control, R.drawable.ic_menu_cpu, true),
-                OverviewNavItem(R.id.nav_swap, R.string.menu_swap, R.drawable.ic_menu_swap, true),
-                OverviewNavItem(R.id.nav_processes, R.string.menu_processes, R.drawable.ic_processes, true),
-                OverviewNavItem(R.id.nav_fps_chart, R.string.menu_fps_chart, R.drawable.fw_float_fps, true)
+                OverviewNavItem(R.id.nav_core_control, R.string.menu_core_control, R.drawable.ic_menu_cpu, true, "CPU/GPU tuning"),
+                OverviewNavItem(R.id.nav_swap, R.string.menu_swap, R.drawable.ic_menu_swap, true, "ZRAM & Virtual memory"),
+                OverviewNavItem(R.id.nav_fps_chart, R.string.menu_fps_chart, R.drawable.fw_float_fps, true, "Real-time frame rate")
             )
         ),
         OverviewSection(
             titleRes = R.string.menu_section_power,
             items = listOf(
-                OverviewNavItem(R.id.nav_charge, R.string.menu_charge, R.drawable.battery, false),
-                OverviewNavItem(R.id.nav_power_utilization, R.string.menu_power_utilization, R.drawable.ic_bat_stats, false)
+                OverviewNavItem(R.id.nav_charge, R.string.menu_charge, R.drawable.battery, false, "Charging control"),
+                OverviewNavItem(R.id.nav_power_utilization, R.string.menu_power_utilization, R.drawable.ic_bat_stats, false, "Battery health & drain")
             )
         ),
         OverviewSection(
             titleRes = R.string.menu_section_advanced,
             items = listOf(
-                OverviewNavItem(R.id.nav_applictions, R.string.menu_applictions, R.drawable.ic_menu_modules, true),
-                OverviewNavItem(R.id.nav_img, R.string.menu_img, R.drawable.ic_menu_img, true),
-                OverviewNavItem(R.id.nav_additional, R.string.menu_sundry, R.drawable.ic_menu_vboot, true),
-                OverviewNavItem(R.id.nav_additional_all, R.string.menu_additional, R.drawable.ic_menu_shell, true),
-                OverviewNavItem(R.id.nav_app_magisk, R.string.menu_app_magisk, R.drawable.ic_menu_addon, true),
-                OverviewNavItem(R.id.nav_miui_thermal, R.string.menu_miui_thermal, R.drawable.ic_menu_hot, false),
-                OverviewNavItem(R.id.nav_modules, R.string.menu_modules, R.drawable.ic_menu_magisk, true)
+                OverviewNavItem(R.id.nav_applictions, R.string.menu_applictions, R.drawable.ic_menu_modules, true, "App manager"),
+                OverviewNavItem(R.id.nav_processes, R.string.menu_processes, R.drawable.ic_processes, true, "System processes"),
+                OverviewNavItem(R.id.nav_img, R.string.menu_img, R.drawable.ic_menu_img, true, "Partition flashing"),
+                OverviewNavItem(R.id.nav_modules, R.string.menu_modules, R.drawable.ic_menu_magisk, true, "Magisk manager"),
+                OverviewNavItem(R.id.nav_app_magisk, R.string.menu_app_magisk, R.drawable.ic_menu_addon, true, "Extensions"),
+                OverviewNavItem(R.id.nav_additional_all, R.string.menu_additional, R.drawable.ic_menu_shell, true, "Custom scripts")
             )
         )
     )
@@ -80,19 +79,20 @@ fun OverviewMenu(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 8.dp, vertical = 8.dp)
+            .padding(horizontal = 12.dp, vertical = 12.dp)
     ) {
         sections.forEach { section ->
             Text(
                 text = stringResource(section.titleRes),
-                style = MiuixTheme.textStyles.footnote1,
-                color = MiuixTheme.colorScheme.onSurfaceContainerVariant
+                style = MiuixTheme.textStyles.title4,
+                color = MiuixTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(start = 4.dp)
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             section.items.chunked(2).forEach { rowItems ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     rowItems.forEach { item ->
                         OverviewMenuItem(
@@ -106,9 +106,9 @@ fun OverviewMenu(
                         Spacer(modifier = Modifier.weight(1f))
                     }
                 }
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(10.dp))
             }
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(12.dp))
         }
     }
 }
@@ -120,34 +120,46 @@ private fun OverviewMenuItem(
     onClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val alpha = if (enabled) 1f else 0.4f
+    val alpha = if (enabled) 1f else 0.45f
     Card(
         modifier = modifier
-            .heightIn(min = 64.dp)
             .alpha(alpha)
             .clickable(enabled = enabled) { onClick(item.id) },
         cornerRadius = 16.dp,
-        insideMargin = androidx.compose.foundation.layout.PaddingValues(8.dp),
+        insideMargin = androidx.compose.foundation.layout.PaddingValues(0.dp),
         colors = CardDefaults.defaultColors()
     ) {
         Row(
             modifier = Modifier
-                .heightIn(min = 68.dp)
-                .padding(horizontal = 8.dp, vertical = 12.dp),
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 painter = painterResource(item.iconRes),
                 contentDescription = null,
                 tint = MiuixTheme.colorScheme.primary,
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier.size(24.dp)
             )
-            Spacer(modifier = Modifier.width(10.dp))
-            Text(
-                text = stringResource(item.titleRes),
-                style = MiuixTheme.textStyles.body1,
-                color = MiuixTheme.colorScheme.onSurface
-            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Column {
+                Text(
+                    text = stringResource(item.titleRes),
+                    style = MiuixTheme.textStyles.body1,
+                    color = MiuixTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                )
+                if (item.description.isNotEmpty()) {
+                    Text(
+                        text = item.description,
+                        style = MiuixTheme.textStyles.footnote2,
+                        color = MiuixTheme.colorScheme.onSurfaceContainerVariant,
+                        maxLines = 1,
+                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                    )
+                }
+            }
         }
     }
 }
