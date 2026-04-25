@@ -801,88 +801,142 @@ private fun HomeScreen(
                 context.startActivity(Intent(context, ActivityCpuControl::class.java))
             }
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Box(
-                        modifier = Modifier.size(100.dp),
-                        contentAlignment = Alignment.Center
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        Box(
+                            modifier = Modifier.size(100.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            AndroidView(
+                                modifier = Modifier.fillMaxSize(),
+                                factory = { context ->
+                                    CpuChartView(context).apply {
+                                        onGpuChartReady(this)
+                                    }
+                                }
+                            )
+                            Text(
+                                text = "GPU",
+                                style = MiuixTheme.textStyles.title4,
+                                color = MiuixTheme.colorScheme.onSurface
+                            )
+                        }
                         AndroidView(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier.size(1.dp),
                             factory = { context ->
-                                CpuChartView(context).apply {
-                                    onGpuChartReady(this)
+                                android.widget.FrameLayout(context).apply {
+                                    alpha = 0.05f
+                                    onGpuInfoContainerReady(this)
                                 }
                             }
                         )
-                        Text(
-                            text = "GPU",
-                            style = MiuixTheme.textStyles.footnote1,
-                            color = MiuixTheme.colorScheme.onSurfaceContainerVariant
-                        )
                     }
-                    AndroidView(
-                        modifier = Modifier.size(1.dp),
-                        factory = { context ->
-                            android.widget.FrameLayout(context).apply {
-                                alpha = 0.05f
-                                onGpuInfoContainerReady(this)
-                            }
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        // GPU Frequency with Progress Bar
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = "Freq: ${state.gpuFreq}",
+                                style = MiuixTheme.textStyles.footnote1,
+                                color = MiuixTheme.colorScheme.onSurface,
+                                modifier = Modifier.weight(1f)
+                            )
                         }
-                    )
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = state.gpuFreq,
-                        style = MiuixTheme.textStyles.body1,
-                        color = MiuixTheme.colorScheme.onSurface
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    
-                    // Parse load value to determine color
-                    val gpuLoadInt = try {
-                        state.gpuLoadText.filter { it.isDigit() }.toInt()
-                    } catch (e: Exception) {
-                        0
-                    }
-                    val loadColor = when {
-                        gpuLoadInt > 90 -> androidx.compose.ui.graphics.Color.Red
-                        gpuLoadInt > 70 -> androidx.compose.ui.graphics.Color(0xFFFFA500) // Orange
-                        else -> MiuixTheme.colorScheme.onSurfaceContainerVariant
-                    }
+                        
+                        // Parse Min/Max and Current Freq for progress bar
+                        val rangeParts = state.gpuFreqRangeText.split(" - ")
+                        val currentFreqInt = try { state.gpuFreq.filter { it.isDigit() }.toInt() } catch (e: Exception) { 0 }
+                        val minFreqInt = try { rangeParts[0].filter { it.isDigit() }.toInt() } catch (e: Exception) { 0 }
+                        val maxFreqInt = try { rangeParts[1].filter { it.isDigit() }.toInt() } catch (e: Exception) { 0 }
+                        
+                        val freqProgress = if (maxFreqInt > minFreqInt) {
+                            (currentFreqInt - minFreqInt).toFloat() / (maxFreqInt - minFreqInt).toFloat()
+                        } else 0f
 
-                    Text(
-                        text = state.gpuLoadText,
-                        style = MiuixTheme.textStyles.footnote1,
-                        color = loadColor
-                    )
-                    if (state.gpuGovernorText.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(4.dp))
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(6.dp)
+                                .clip(RoundedCornerShape(3.dp))
+                                .background(MiuixTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth(freqProgress.coerceIn(0f, 1f))
+                                    .height(6.dp)
+                                    .background(MiuixTheme.colorScheme.primary)
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        // GPU Load
+                        val gpuLoadInt = try {
+                            state.gpuLoadText.filter { it.isDigit() }.toInt()
+                        } catch (e: Exception) {
+                            0
+                        }
+                        val loadColor = when {
+                            gpuLoadInt > 90 -> androidx.compose.ui.graphics.Color.Red
+                            gpuLoadInt > 70 -> androidx.compose.ui.graphics.Color(0xFFFFA500) // Orange
+                            else -> MiuixTheme.colorScheme.onSurface
+                        }
+                        
                         Text(
-                            text = state.gpuGovernorText,
-                            style = MiuixTheme.textStyles.footnote2,
-                            color = MiuixTheme.colorScheme.onSurfaceContainerVariant
+                            text = "Utilization: $gpuLoadInt%",
+                            style = MiuixTheme.textStyles.footnote1,
+                            color = loadColor
                         )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(6.dp)
+                                .clip(RoundedCornerShape(3.dp))
+                                .background(MiuixTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth((gpuLoadInt / 100f).coerceIn(0f, 1f))
+                                    .height(6.dp)
+                                    .background(loadColor)
+                            )
+                        }
                     }
-                    if (state.gpuFreqRangeText.isNotEmpty()) {
-                        Text(
-                            text = state.gpuFreqRangeText,
-                            style = MiuixTheme.textStyles.footnote2,
-                            color = MiuixTheme.colorScheme.onSurfaceContainerVariant
-                        )
+                }
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                // Extra Info Footer for GPU
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MiuixTheme.colorScheme.onSurface.copy(alpha = 0.05f))
+                        .padding(horizontal = 10.dp, vertical = 6.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(text = "Gov: ${state.gpuGovernorText}", style = MiuixTheme.textStyles.footnote2, color = MiuixTheme.colorScheme.onSurfaceContainerVariant)
+                        Text(text = "Range: ${state.gpuFreqRangeText}", style = MiuixTheme.textStyles.footnote2, color = MiuixTheme.colorScheme.onSurfaceContainerVariant)
                     }
                     if (state.gpuInfoText.isNotEmpty()) {
-                        Spacer(modifier = Modifier.height(6.dp))
+                        Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = state.gpuInfoText,
+                            text = state.gpuInfoText.replace("\n", " | "),
                             style = MiuixTheme.textStyles.footnote2,
-                            color = MiuixTheme.colorScheme.onSurfaceContainerVariant
+                            color = MiuixTheme.colorScheme.onSurfaceContainerVariant,
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                         )
                     }
                 }
