@@ -26,6 +26,7 @@ import com.omarea.common.ui.DialogHelper
 import com.omarea.permissions.CheckRootStatus
 import com.omarea.store.SpfConfig
 import com.omarea.ui.TabIconHelper2
+import androidx.compose.foundation.layout.statusBarsPadding
 import com.omarea.utils.ElectricityUnit
 import com.omarea.utils.Update
 import com.omarea.vtools.R
@@ -64,8 +65,8 @@ import java.util.ArrayDeque
 class ActivityMain : ActivityBase() {
     companion object {
         const val EXTRA_SELECT_TAB = "select_tab"
-        const val TAB_NAV = 0
-        const val TAB_HOME = 1
+        const val TAB_HOME = 0
+        const val TAB_NAV = 1
         const val TAB_TUNER = 2
         var lastSelectedTab = TAB_HOME
     }
@@ -182,12 +183,12 @@ class ActivityMain : ActivityBase() {
         }
 
         val tabIconHelper2 = TabIconHelper2(binding.tabList, binding.tabContent, this, R.layout.list_item_tab2)
-        tabIconHelper2.newTabSpec(getString(R.string.app_nav), getDrawable(R.drawable.app_menu)!!, FragmentNav.createPage(themeMode))
         tabIconHelper2.newTabSpec(getString(R.string.app_home), getDrawable(R.drawable.app_home)!!, (if (CheckRootStatus.lastCheckResult) {
             FragmentHome()
         } else {
             FragmentNotRoot()
         }))
+        tabIconHelper2.newTabSpec(getString(R.string.app_nav), getDrawable(R.drawable.app_menu)!!, FragmentNav.createPage(themeMode))
         tabIconHelper2.newTabSpec(getString(R.string.app_tuner), getDrawable(R.drawable.app_settings)!!, FragmentCpuModes())
         binding.tabContent.adapter = tabIconHelper2.adapter
         binding.tabList.addOnTabSelectedListener(object : com.google.android.material.tabs.TabLayout.OnTabSelectedListener {
@@ -239,44 +240,49 @@ class ActivityMain : ActivityBase() {
         binding.topHeaderView.setContent {
             MiuixTheme {
                 val selectedTab = lastSelectedTab
+                val isDark = androidx.compose.foundation.isSystemInDarkTheme()
+                
+                // Explicitly define colors to avoid theme mismatch issues
+                val textColor = if (isDark) androidx.compose.ui.graphics.Color.White else MiuixTheme.colorScheme.onSurface
+                val iconColor = if (isDark) androidx.compose.ui.graphics.Color.White.copy(alpha = 0.9f) else MiuixTheme.colorScheme.onSurface
                 
                 Column(
                     modifier = androidx.compose.ui.Modifier
                         .fillMaxWidth()
-                        .background(MiuixTheme.colorScheme.surface.copy(alpha = 0.95f))
-                        .padding(top = 12.dp, bottom = 8.dp)
+                        .statusBarsPadding()
+                        .background(androidx.compose.ui.graphics.Color.Transparent)
                 ) {
                     Row(
                         modifier = androidx.compose.ui.Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
-                        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                            .padding(horizontal = 16.dp, vertical = 14.dp),
+                        verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        // Left: Segmented Tabs
+                        // Left: Segmented Tabs (Reordered: Home, Nav, Tuner)
                         Row(
                             modifier = androidx.compose.ui.Modifier
                                 .weight(1f)
-                                .height(42.dp)
-                                .clip(RoundedCornerShape(21.dp))
-                                .background(MiuixTheme.colorScheme.onSurface.copy(alpha = 0.05f))
-                                .padding(4.dp),
+                                .height(38.dp)
+                                .clip(RoundedCornerShape(19.dp))
+                                .background(MiuixTheme.colorScheme.onSurface.copy(alpha = if (isDark) 0.15f else 0.06f))
+                                .padding(3.dp),
                             verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
                         ) {
                             val navItems = listOf(
-                                TAB_NAV to "Nav",
                                 TAB_HOME to "Home",
+                                TAB_NAV to "More",
                                 TAB_TUNER to "Tuner"
                             )
-                            
+
                             navItems.forEach { (tabId, label) ->
                                 val isSelected = selectedTab == tabId
                                 Box(
                                     modifier = androidx.compose.ui.Modifier
                                         .weight(1f)
                                         .fillMaxHeight()
-                                        .clip(RoundedCornerShape(18.dp))
-                                        .background(if (isSelected) MiuixTheme.colorScheme.surface else androidx.compose.ui.graphics.Color.Transparent)
+                                        .clip(RoundedCornerShape(17.dp))
+                                        .background(if (isSelected) MiuixTheme.colorScheme.primary else androidx.compose.ui.graphics.Color.Transparent)
                                         .combinedClickable(
                                             onClick = {
                                                 binding.tabList.getTabAt(tabId)?.select()
@@ -288,27 +294,34 @@ class ActivityMain : ActivityBase() {
                                     Text(
                                         text = label,
                                         style = MiuixTheme.textStyles.footnote1,
-                                        color = if (isSelected) MiuixTheme.colorScheme.primary else MiuixTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                                        color = if (isSelected) MiuixTheme.colorScheme.onPrimary else textColor.copy(alpha = 0.8f),
+                                        fontWeight = if (isSelected) androidx.compose.ui.text.font.FontWeight.Bold else androidx.compose.ui.text.font.FontWeight.Medium
                                     )
                                 }
                             }
                         }
 
-                        Spacer(modifier = androidx.compose.ui.Modifier.width(12.dp))
+                        Spacer(modifier = androidx.compose.ui.Modifier.width(16.dp))
 
-                        // Right: Quick Actions
-                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                            IconButton(onClick = { actionGraph() }, modifier = androidx.compose.ui.Modifier.size(38.dp)) {
-                                Icon(painter = painterResource(R.drawable.graph), contentDescription = null, tint = MiuixTheme.colorScheme.onSurface, modifier = androidx.compose.ui.Modifier.size(20.dp))
+                        // Right: Actions
+                        Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+                            IconButton(onClick = { actionGraph() }, modifier = androidx.compose.ui.Modifier.size(36.dp)) {
+                                Icon(painter = painterResource(R.drawable.graph), contentDescription = null, tint = iconColor, modifier = androidx.compose.ui.Modifier.size(20.dp))
                             }
-                            IconButton(onClick = { DialogPower(this@ActivityMain).showPowerMenu() }, modifier = androidx.compose.ui.Modifier.size(38.dp)) {
-                                Icon(painter = painterResource(R.drawable.ic_power), contentDescription = null, tint = MiuixTheme.colorScheme.onSurface, modifier = androidx.compose.ui.Modifier.size(20.dp))
+                            IconButton(onClick = { DialogPower(this@ActivityMain).showPowerMenu() }, modifier = androidx.compose.ui.Modifier.size(36.dp)) {
+                                Icon(painter = painterResource(R.drawable.ic_power), contentDescription = null, tint = iconColor, modifier = androidx.compose.ui.Modifier.size(20.dp))
                             }
-                            IconButton(onClick = { startActivity(Intent(this@ActivityMain, ActivityOtherSettings::class.java)) }, modifier = androidx.compose.ui.Modifier.size(38.dp)) {
-                                Icon(painter = painterResource(R.drawable.settings), contentDescription = null, tint = MiuixTheme.colorScheme.onSurface, modifier = androidx.compose.ui.Modifier.size(20.dp))
+                            IconButton(onClick = { startActivity(Intent(this@ActivityMain, ActivityOtherSettings::class.java)) }, modifier = androidx.compose.ui.Modifier.size(36.dp)) {
+                                Icon(painter = painterResource(R.drawable.settings), contentDescription = null, tint = iconColor, modifier = androidx.compose.ui.Modifier.size(20.dp))
                             }
                         }
                     }
+                    Box(
+                        modifier = androidx.compose.ui.Modifier
+                            .fillMaxWidth()
+                            .height(0.4.dp)
+                            .background(textColor.copy(alpha = 0.15f))
+                    )
                 }
             }
         }
