@@ -20,6 +20,8 @@
             <LinearLayout
                 android:id="@+id/cpu_modes_card_modes"
                 style="@style/ListCardItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@null"
                 android:layout_marginBottom="0dp"
                 android:orientation="vertical"
@@ -98,8 +100,18 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:orientation="vertical">
-                                <TextView style="@style/textTitle" android:text="@string/powersave" android:textSize="14sp" />
-                                <TextView style="@style/textSmall" android:text="Power" android:alpha="0.6" />
+                                <TextView
+                                    style="@style/textTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/powersave"
+                                    android:textSize="14sp" />
+                                <TextView
+                                    style="@style/textSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Power"
+                                    android:alpha="0.6" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -126,8 +138,18 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:orientation="vertical">
-                                <TextView style="@style/textTitle" android:text="@string/balance" android:textSize="14sp" />
-                                <TextView style="@style/textSmall" android:text="Normal" android:alpha="0.6" />
+                                <TextView
+                                    style="@style/textTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/balance"
+                                    android:textSize="14sp" />
+                                <TextView
+                                    style="@style/textSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Normal"
+                                    android:alpha="0.6" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -160,8 +182,18 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:orientation="vertical">
-                                <TextView style="@style/textTitle" android:text="@string/performance" android:textSize="14sp" />
-                                <TextView style="@style/textSmall" android:text="Gaming" android:alpha="0.6" />
+                                <TextView
+                                    style="@style/textTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/performance"
+                                    android:textSize="14sp" />
+                                <TextView
+                                    style="@style/textSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Gaming"
+                                    android:alpha="0.6" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -188,8 +220,18 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:orientation="vertical">
-                                <TextView style="@style/textTitle" android:text="@string/fast" android:textSize="14sp" />
-                                <TextView style="@style/textSmall" android:text="Extreme" android:alpha="0.6" />
+                                <TextView
+                                    style="@style/textTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fast"
+                                    android:textSize="14sp" />
+                                <TextView
+                                    style="@style/textSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Extreme"
+                                    android:alpha="0.6" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -206,6 +248,8 @@
                 <LinearLayout
                     android:id="@+id/nav_scene_service_not_active"
                     style="@style/ListCardItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
@@ -244,6 +288,8 @@
             <LinearLayout
                 android:id="@+id/cpu_modes_card_dynamic"
                 style="@style/ListCardItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@null"
                 android:padding="16dp"
                 android:layout_marginTop="0dp"
@@ -322,7 +368,12 @@
                                     android:layout_height="wrap_content" />
                             </LinearLayout>
 
-                            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#10000000" android:layout_marginTop="10dp" android:layout_marginBottom="10dp" />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="#10000000"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp" />
 
                             <!-- Screen Off Mode -->
                             <LinearLayout
@@ -343,7 +394,12 @@
                                     android:layout_height="wrap_content" />
                             </LinearLayout>
 
-                            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#10000000" android:layout_marginTop="10dp" android:layout_marginBottom="10dp" />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="#10000000"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp" />
 
                             <Switch
                                 android:id="@+id/strict_mode"
@@ -352,7 +408,12 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/schedule_enhanced" />
 
-                            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#10000000" android:layout_marginTop="10dp" android:layout_marginBottom="10dp" />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="#10000000"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp" />
 
                             <Switch
                                 android:id="@+id/delay_switch"
@@ -419,6 +480,8 @@
             <LinearLayout
                 android:id="@+id/cpu_modes_card_shortcuts"
                 style="@style/ListCardItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@null"
                 android:layout_marginTop="12dp"
                 android:padding="16dp"
@@ -426,12 +489,12 @@
 
                 <TextView
                     style="@style/textTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Shortcuts"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="12dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_marginBottom="12dp" />
 
                 <!-- Battery Stats -->
                 <LinearLayout
@@ -457,7 +520,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:text="@string/menu_battery_stats" />
-                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/arrow" app:tint="#40000000" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/arrow"
+                        app:tint="#40000000" />
                 </LinearLayout>
 
                 <!-- App Scene -->
@@ -484,7 +551,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:text="@string/schedule_app" />
-                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/arrow" app:tint="#40000000" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/arrow"
+                        app:tint="#40000000" />
                 </LinearLayout>
 
                 <!-- Auto Click -->
@@ -511,7 +582,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:text="Auto clicker" />
-                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/arrow" app:tint="#40000000" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/arrow"
+                        app:tint="#40000000" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -527,9 +602,9 @@
                 <TextView
                     android:text="More Advanced Features"
                     style="@style/textSmall"
-                    android:textStyle="bold"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold" />
                 
                 <LinearLayout
                     android:layout_marginTop="8dp"
@@ -540,25 +615,25 @@
                         android:id="@+id/nav_thermal"
                         android:text="Thermal"
                         style="@style/textTitle"
-                        android:layout_marginRight="16dp"
-                        android:textColor="?android:colorAccent"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:textColor="?android:colorAccent" />
                     <TextView
                         android:id="@+id/nav_processes"
                         android:text="Processes"
                         style="@style/textTitle"
-                        android:layout_marginRight="16dp"
-                        android:textColor="?android:colorAccent"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:textColor="?android:colorAccent" />
                     <TextView
                         android:id="@+id/nav_freeze"
                         android:text="Freeze"
                         style="@style/textTitle"
-                        android:textColor="?android:colorAccent"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textColor="?android:colorAccent" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
