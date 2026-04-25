@@ -60,10 +60,6 @@ public class SpfConfig {
     public static int GLOBAL_SPF_MAC_AUTOCHANGE_MODE_2 = 2;
     public static String GLOBAL_SPF_POWERCFG_FIRST_MODE = "powercfg_first_mode";
     public static String GLOBAL_SPF_POWERCFG_SLEEP_MODE = "powercfg_sleep_mode";
-    public static String GLOBAL_SPF_DYNAMIC_CONTROL = "dynamic_control";
-    public static boolean GLOBAL_SPF_DYNAMIC_CONTROL_DEFAULT = false;
-    public static String GLOBAL_SPF_DYNAMIC_CONTROL_STRICT = "dynamic_control_strict";
-    public static String GLOBAL_SPF_DYNAMIC_CONTROL_DELAY = "dynamic_control_delay";
     public static String GLOBAL_SPF_PROFILE_SOURCE = "scene_profile_source";
     public static String GLOBAL_SPF_POWERCFG = "global_powercfg";
     public static String GLOBAL_SPF_CONTRACT = "global_contract_scene5";

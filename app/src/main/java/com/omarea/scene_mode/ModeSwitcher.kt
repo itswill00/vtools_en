@@ -12,9 +12,8 @@ import com.omarea.store.SpfConfig
 import com.omarea.vtools.R
 
 /**
- * Created by Hello on 2018/06/03.
+ * ModeSwitcher - Cleaned up version (Dynamic Response Removed)
  */
-
 open class ModeSwitcher {
     companion object {
         const val SOURCE_UNKNOWN = "UNKNOWN"
@@ -26,16 +25,13 @@ open class ModeSwitcher {
         const val SOURCE_OUTSIDE = "SOURCE_OUTSIDE"
         const val SOURCE_OUTSIDE_UPERF = "SOURCE_OUTSIDE_UPERF"
         const val SOURCE_NONE = "SOURCE_NONE"
-        // 安装在 数据目录的配置文件
+        
         const val PROVIDER_INSIDE = "PROVIDER_INSIDE"
-        // 安装在 /data目录的配置文件
         const val PROVIDER_OUTSIDE = "PROVIDER_OUTSIDE"
         const val PROVIDER_NONE = "PROVIDER_NONE"
 
         private var inited = false
-        // 最后使用的配置提供者
         var lastInitProvider = PROVIDER_NONE
-        // 配置提供文件
         private var configProvider: String = ""
 
         fun getCurrentSource(): String {
@@ -54,34 +50,17 @@ open class ModeSwitcher {
         fun getCurrentSourceName(): String {
             val source = getCurrentSource()
             return (when (source) {
-                "SOURCE_OUTSIDE" -> {
-                    "External Sources"
-                }
-                "SOURCE_SCENE_CONSERVATIVE" -> {
-                    "Scene-Classic"
-                }
-                "SOURCE_SCENE_ACTIVE" -> {
-                    "Scene-Performance"
-                }
-                "SOURCE_SCENE_CUSTOM" -> {
-                    "Custom"
-                }
-                "SOURCE_SCENE_IMPORT" -> {
-                    "File Import"
-                }
-                "SOURCE_SCENE_ONLINE" -> {
-                    "Online Download"
-                }
-                "SOURCE_NONE" -> {
-                    "Undefined"
-                }
-                else -> {
-                    "Unknown"
-                }
+                "SOURCE_OUTSIDE" -> "External Sources"
+                "SOURCE_SCENE_CONSERVATIVE" -> "Scene-Classic"
+                "SOURCE_SCENE_ACTIVE" -> "Scene-Performance"
+                "SOURCE_SCENE_CUSTOM" -> "Custom"
+                "SOURCE_SCENE_IMPORT" -> "File Import"
+                "SOURCE_SCENE_ONLINE" -> "Online Download"
+                "SOURCE_NONE" -> "Undefined"
+                else -> "Unknown"
             })
         }
 
-        // 是否已经完成内置配置文件的自动更新（如果使用的是Scene自带的配置，每次切换调度前，先安装配置）
         private var innerConfigUpdated = false
 
         const val OUTSIDE_POWER_CFG_PATH = "/data/powercfg.sh"
@@ -167,8 +146,6 @@ open class ModeSwitcher {
         KeepShellPublic.secondaryKeepShell.doCmdSync(cmd)
     }
 
-    // init
-    // TODO:看什么时候清空缓存
     internal fun initPowerCfg(): ModeSwitcher {
         val installer = CpuConfigInstaller()
         if (installer.outsideConfigInstalled()) {
@@ -187,15 +164,12 @@ open class ModeSwitcher {
         if (configProvider.isNotEmpty()) {
             keepShellExec("sh $configProvider $INIT > /dev/null 2>&1")
             setCurrentPowercfg("")
-
             inited = true
         }
         return this
     }
 
-    // 切换模式
     private fun executeMode(mode: String, packageName: String): ModeSwitcher {
-        // TODO: mode == IGONED 的处理
         if (mode != IGONED) {
             val source = getCurrentSource()
             when (source) {
@@ -205,7 +179,7 @@ open class ModeSwitcher {
                         cpuConfigStorage.applyCpuConfig(mode)
                         setCurrentPowercfg(mode)
                     } else {
-                        Log.e("Scene", "" + mode + "Profile lost!")
+                        Log.e("Scene", "" + mode + " Profile lost!")
                     }
                 }
                 SOURCE_OUTSIDE -> {
@@ -214,22 +188,13 @@ open class ModeSwitcher {
                     }
 
                     if (configProvider.isNotEmpty()) {
-                        val dynamic = Scene.getBoolean(SpfConfig.GLOBAL_SPF_DYNAMIC_CONTROL, SpfConfig.GLOBAL_SPF_DYNAMIC_CONTROL_DEFAULT)
-                        val strictMode = Scene.getBoolean(SpfConfig.GLOBAL_SPF_DYNAMIC_CONTROL_STRICT, false)
-                        if (dynamic && strictMode) {
-                            keepShellExec(
-                                    "export top_app=$packageName\n" +
-                                            "sh $configProvider '$mode' > /dev/null 2>&1"
-                            )
-                        } else {
-                            keepShellExec(
-                                    "export top_app=\n" +
-                                        "sh $configProvider '$mode' > /dev/null 2>&1"
-                            )
-                        }
+                        keepShellExec(
+                            "export top_app=''\n" +
+                            "sh $configProvider '$mode' > /dev/null 2>&1"
+                        )
                         setCurrentPowercfg(mode)
                     } else {
-                        Log.e("Scene", "" + mode + "Profile lost!")
+                        Log.e("Scene", "" + mode + " Profile lost!")
                     }
                 }
                 else -> {
@@ -238,23 +203,13 @@ open class ModeSwitcher {
                     }
 
                     if (configProvider.isNotEmpty()) {
-                        val dynamic = Scene.getBoolean(SpfConfig.GLOBAL_SPF_DYNAMIC_CONTROL, SpfConfig.GLOBAL_SPF_DYNAMIC_CONTROL_DEFAULT)
-                        val strictMode = Scene.getBoolean(SpfConfig.GLOBAL_SPF_DYNAMIC_CONTROL_STRICT, false)
-                        if (dynamic && strictMode) {
-                            val currentTime = SystemClock.elapsedRealtime()
-                            keepShellExec(
-                                    "export top_app=$packageName\n" +
-                                            "sh $configProvider '$mode' 'task$currentTime' > /dev/null 2>&1"
-                            )
-                        } else {
-                            keepShellExec(
-                                    "export top_app=''\n" +
-                                            "sh $configProvider '$mode' > /dev/null 2>&1"
-                            )
-                        }
+                        keepShellExec(
+                            "export top_app=''\n" +
+                            "sh $configProvider '$mode' > /dev/null 2>&1"
+                        )
                         setCurrentPowercfg(mode)
                     } else {
-                        Log.e("Scene", "" + mode + "Profile lost!")
+                        Log.e("Scene", "" + mode + " Profile lost!")
                     }
                 }
             }
@@ -274,33 +229,26 @@ open class ModeSwitcher {
         return this
     }
 
-    // 是否已经完成指定模式的自定义
     public fun modeReplaced(mode: String): Boolean {
         return CpuConfigStorage(Scene.context).exists(mode)
     }
 
-    // 是否已完成四个模式的配置
     public fun modeConfigCompleted(): Boolean {
         if (CpuConfigInstaller().outsideConfigInstalled()) {
             return true
         } else {
             val source = getCurrentSource()
             when (source) {
-                SOURCE_SCENE_CUSTOM -> {
-                    return allModeReplaced()
-                }
+                SOURCE_SCENE_CUSTOM -> return allModeReplaced()
                 SOURCE_SCENE_ACTIVE,
                 SOURCE_SCENE_CONSERVATIVE,
                 SOURCE_SCENE_IMPORT,
-                SOURCE_SCENE_ONLINE -> {
-                    return CpuConfigInstaller().insideConfigInstalled()
-                }
+                SOURCE_SCENE_ONLINE -> return CpuConfigInstaller().insideConfigInstalled()
             }
         }
         return false
     }
 
-    // 是否已经完成所有模式的自定义
     public fun allModeReplaced(): Boolean {
         val storage = CpuConfigStorage(Scene.context)
 

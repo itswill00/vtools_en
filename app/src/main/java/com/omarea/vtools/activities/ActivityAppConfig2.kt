@@ -129,7 +129,7 @@ class ActivityAppConfig2 : ActivityBase() {
         }
 
         // 动态响应检测
-        val dynamicControl = globalSPF.getBoolean(SpfConfig.GLOBAL_SPF_DYNAMIC_CONTROL, SpfConfig.GLOBAL_SPF_DYNAMIC_CONTROL_DEFAULT)
+        val dynamicControl = false
 
         if (dynamicControl) {
             binding.sceneAppList.setOnItemLongClickListener { parent, view, position, _ ->
