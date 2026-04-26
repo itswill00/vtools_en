@@ -26,6 +26,7 @@ import com.omarea.scene_mode.SceneMode
 import com.omarea.store.CpuConfigStorage
 import com.omarea.store.SceneConfigStore
 import com.omarea.store.SpfConfig
+import com.omarea.vtools.tuner.TunerExecutor
 import com.omarea.utils.CommonCmds
 import com.omarea.vtools.R
 
@@ -72,6 +73,7 @@ class BootWorker(
 
     private fun autoBoot() {
         val keepShell = KeepShell()
+        TunerExecutor(appContext).applyAll()
 
         if (globalConfig.getBoolean(SpfConfig.GLOBAL_SPF_DISABLE_ENFORCE, false)) {
             keepShell.doCmdSync(CommonCmds.DisableSELinux)
